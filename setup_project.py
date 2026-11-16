@@ -166,7 +166,7 @@ if __name__ == '__main__':
 </head>
 <body>
 <div class="container">
-    <header><h2>SDSMCLF v1.0 Working Prototype</h2><p>Live Seminar Simulation Interface</p></header>
+    <header><h2>SDSMCLF v1.0 Working Prototype</h2><p>Live Project Simulation Interface</p></header>
     <div class="grid">
         <div class="card">
             <h3>Execute Demo Transaction</h3>
