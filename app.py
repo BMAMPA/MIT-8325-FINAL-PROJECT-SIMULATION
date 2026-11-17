@@ -1,6 +1,6 @@
 import time
 import jwt
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from functools import wraps
 from flask import Flask, request, jsonify
 
@@ -20,13 +20,26 @@ processed_transactions = set()
 audit_logs = []
 
 
+@app.after_request
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    return response
+
+
 def require_jwt(f):
     @wraps(f)
     def decorated(*args, **kwargs):
+        if request.method == "OPTIONS":
+            return jsonify({"status": "OK"}), 200
         auth_header = request.headers.get("Authorization", "")
         if not auth_header.startswith("Bearer "):
             return jsonify({"status": "FAILED", "errorCode": "MISSING_TOKEN", "message": "Authorization token required"}), 401
-        token = auth_header.split(" ")[1]
+        parts = auth_header.split(" ")
+        if len(parts) != 2:
+            return jsonify({"status": "FAILED", "errorCode": "MALFORMED_TOKEN", "message": "Malformed Bearer header"}), 401
+        token = parts[1]
         try:
             jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
         except jwt.ExpiredSignatureError:
@@ -48,7 +61,20 @@ def log_audit(txn_id, meter_id, amount, outcome, latency_ms):
     })
 
 
-@app.route("/api/v1/smart-meter/load-credit", methods=["POST"])
+@app.route("/api/v1/auth/demo-token", methods=["GET", "OPTIONS"])
+def issue_demo_token():
+    if request.method == "OPTIONS":
+        return jsonify({"status": "OK"}), 200
+    payload = {
+        "user": "payment_gateway_psp",
+        "role": "AUTHORIZED_VENDING_PARTNER",
+        "exp": datetime.now(timezone.utc) + timedelta(minutes=30)
+    }
+    token = jwt.encode(payload, app.config["SECRET_KEY"], algorithm="HS256")
+    return jsonify({"token": token}), 200
+
+
+@app.route("/api/v1/smart-meter/load-credit", methods=["POST", "OPTIONS"])
 @require_jwt
 def load_credit():
     start_time = time.perf_counter()
@@ -61,7 +87,7 @@ def load_credit():
     payment_status = data.get("paymentStatus")
 
     # 1. Input & Payment Verification
-    if not all([txn_id, customer_id, meter_id]) or amount <= 0:
+    if not all([txn_id, customer_id, meter_id]) or float(amount) <= 0:
         latency = (time.perf_counter() - start_time) * 1000
         log_audit(txn_id, meter_id, amount, "INVALID_PAYLOAD", latency)
         return jsonify({"status": "FAILED", "errorCode": "INVALID_REQUEST", "message": "Missing or invalid transaction parameters"}), 400
