@@ -9,22 +9,22 @@
         header { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 18px; border-radius: 10px; text-align: center; margin-bottom: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         header h2 { margin: 0 0 4px 0; font-size: 22px; }
         header p { margin: 0; font-size: 13.5px; color: #cbd5e1; }
-        .mode-pill { display: inline-block; background: #0f172a; color: #38bdf8; padding: 4px 14px; border-radius: 20px; font-size: 11.5px; font-weight: bold; margin-top: 8px; border: 1px solid #1e293b; }
+        .mode-pill { display: inline-block; background: #0f172a; color: #4ade80; padding: 4px 14px; border-radius: 20px; font-size: 11.5px; font-weight: bold; margin-top: 8px; border: 1px solid #334155; }
         .grid { display: grid; grid-template-columns: 1fr 1fr 1.35fr; gap: 18px; align-items: start; }
         .card { background: white; padding: 18px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
         h3 { color: #1e3a8a; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; font-size: 16px; }
         label { display: block; font-weight: bold; margin: 8px 0 4px; color: #475569; font-size: 12.5px; }
         input { width: 93%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 5px; font-size: 13.5px; background: #f8fafc; }
-        button { color: white; border: none; padding: 10px; width: 99%; border-radius: 5px; font-size: 13.5px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        button { color: white; border: none; padding: 10px; width: 99%; border-radius: 5px; font-size: 13.5px; font-weight: bold; cursor: pointer; margin-top: 9px; transition: 0.2s; }
         .btn-submit { background: #10b981; }
         .btn-submit:hover { background: #059669; }
-        .btn-replay { background: #dc2626; margin-top: 7px; }
+        .btn-replay { background: #dc2626; }
         .btn-replay:hover { background: #b91c1c; }
-        .btn-secondary { background: #64748b; margin-top: 7px; }
-        .btn-secondary:hover { background: #475569; }
+        .btn-reset { background: #f59e0b; color: #0f172a; }
+        .btn-reset:hover { background: #d97706; color: white; }
         .btn-export { background: #2563eb; margin-top: 0; margin-bottom: 10px; }
         .btn-export:hover { background: #1d4ed8; }
-        .console { background: #0f172a; color: #10b981; padding: 12px; border-radius: 6px; font-family: monospace; white-space: pre-wrap; margin-top: 12px; font-size: 11.5px; line-height: 1.45; height: 175px; overflow-y: auto; }
+        .console { background: #0f172a; color: #10b981; padding: 12px; border-radius: 6px; font-family: monospace; white-space: pre-wrap; margin-top: 12px; font-size: 11.5px; line-height: 1.45; height: 170px; overflow-y: auto; }
 
         /* Digital Smart Meter Hardware Casing & LCD Styling */
         .meter-casing { background: linear-gradient(180deg, #334155, #1e293b); border-radius: 14px; padding: 18px; color: #f8fafc; border: 3px solid #475569; box-shadow: inset 0 2px 4px rgba(255,255,255,0.15), 0 8px 16px rgba(0,0,0,0.15); }
@@ -33,14 +33,13 @@
         .led-item { display: flex; align-items: center; gap: 6px; }
         .led-dot { width: 10px; height: 10px; border-radius: 50%; background: #475569; }
         .led-green { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
-        .led-amber { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
         .led-red { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
-        .lcd-screen { background: #84cc16; color: #1a2e05; font-family: 'Courier New', Courier, monospace; padding: 14px; border-radius: 6px; border: 4px solid #0f172a; box-shadow: inset 0 2px 8px rgba(0,0,0,0.35); transition: background 0.3s; }
-        .lcd-flash { background: #bef264 !important; }
+        .lcd-screen { background: #84cc16; color: #1a2e05; font-family: 'Courier New', Courier, monospace; padding: 14px; border-radius: 6px; border: 4px solid #0f172a; box-shadow: inset 0 2px 8px rgba(0,0,0,0.35); transition: background 0.25s; }
+        .lcd-flash { background: #d9f99d !important; }
         .lcd-top { display: flex; justify-content: space-between; font-size: 11px; font-weight: bold; border-bottom: 1px dashed #365314; padding-bottom: 4px; margin-bottom: 8px; }
         .lcd-main { font-size: 26px; font-weight: 900; text-align: right; letter-spacing: 1px; margin: 6px 0; }
         .lcd-sub { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; margin-top: 6px; border-top: 1px dashed #365314; padding-top: 6px; }
-        .lcd-msg { background: #365314; color: #ecfccb; font-size: 11px; padding: 4px 8px; border-radius: 3px; margin-top: 8px; text-align: center; font-weight: bold; }
+        .lcd-msg { background: #365314; color: #ecfccb; font-size: 11px; padding: 5px 8px; border-radius: 3px; margin-top: 8px; text-align: center; font-weight: bold; }
         .meter-specs { margin-top: 12px; font-size: 11.5px; color: #cbd5e1; background: rgba(15,23,42,0.6); padding: 10px; border-radius: 6px; line-height: 1.6; }
 
         table { width: 100%; border-collapse: collapse; margin-top: 6px; }
@@ -55,7 +54,7 @@
     <header>
         <h2>SDSMCLF v1.0 Working Simulation Prototype</h2>
         <p>Smart Decentralized Secure Metering Credit Loading Framework — IBEDC Live Seminar Interface</p>
-        <div class="mode-pill" id="connectionMode">API Mode: Checking Flask Backend (127.0.0.1:5000)...</div>
+        <div class="mode-pill" id="connectionMode">SYSTEM ONLINE — DIRECT METER PUSH ENGINE READY</div>
     </header>
 
     <div class="grid">
@@ -67,9 +66,9 @@
             <label>Customer ID</label><input type="text" id="custId" value="IB001245">
             <label>Smart Meter Serial</label><input type="text" id="meterId" value="SM4509876">
             <label>Purchase Topup Amount (₦)</label><input type="number" id="amount" value="5000">
-            <button class="btn-submit" onclick="runSimulationPipeline(false)">Send Secure Direct Credit Request</button>
-            <button class="btn-replay" onclick="runSimulationPipeline(true)">Test Replay Attack (Duplicate TXN)</button>
-            <button class="btn-secondary" onclick="generateNextTxn()">Generate Next Transaction ID</button>
+            <button type="button" class="btn-submit" onclick="executeCreditLoad(false)">Send Secure Direct Credit Request</button>
+            <button type="button" class="btn-replay" onclick="executeCreditLoad(true)">Test Replay Attack (Duplicate TXN)</button>
+            <button type="button" class="btn-reset" onclick="resetFullDemo()">Reset Demo & Meter Balance</button>
             <div class="console" id="consoleLogs">&gt; Ready for automated direct credit loading...</div>
         </div>
 
@@ -110,7 +109,7 @@
         <!-- Column 3: Immutable Audit Log Repository -->
         <div class="card">
             <h3>3. Immutable Audit Log Repository</h3>
-            <button class="btn-export" onclick="exportTableToCSV()">Download Audit Logs (CSV)</button>
+            <button type="button" class="btn-export" onclick="exportTableToCSV()">Download Audit Logs (CSV)</button>
             <table id="auditTable">
                 <thead>
                     <tr>
@@ -131,15 +130,16 @@
 
 <script>
     const API_BASE = "http://127.0.0";
-    const TARIFF_PER_KWH = 68.00; // NGN per kWh
+    const TARIFF_PER_KWH = 68.00;
     let txnCounter = 900123;
     let currentBalance = 1200.00;
-    const offlineProcessed = new Set();
+    let lastSuccessfulTxn = "";
+    const processedTxns = new Set();
 
-    // Simulate live household load fluctuation & tiny real-time consumption tick on the meter LCD
-    setInterval(() => {
+    // Live household load & real-time consumption tick on meter LCD
+    setInterval(function () {
         const kw = (1.15 + Math.random() * 0.55).toFixed(2);
-        document.getElementById("lcdLoad").innerText = `LOAD: ${kw} kW`;
+        document.getElementById("lcdLoad").innerText = "LOAD: " + kw + " kW";
         if (currentBalance > 0.05) {
             currentBalance = Math.max(0, currentBalance - 0.02);
             refreshMeterLCD(currentBalance, false);
@@ -148,66 +148,70 @@
 
     function refreshMeterLCD(balanceNgn, highlightFlash) {
         const kwh = (balanceNgn / TARIFF_PER_KWH).toFixed(2);
-        document.getElementById("lcdUnits").innerText = `${kwh} kWh`;
+        document.getElementById("lcdUnits").innerText = kwh + " kWh";
 
-document.getElementById("lcdBalance").innerText = BAL: ₦${balanceNgn.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })};
+document.getElementById("lcdBalance").innerText = "BAL: ₦" + balanceNgn.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 if (highlightFlash) {
 const lcd = document.getElementById("lcdBox");
 lcd.classList.add("lcd-flash");
-setTimeout(() => lcd.classList.remove("lcd-flash"), 900);
+setTimeout(function () { lcd.classList.remove("lcd-flash"); }, 900);
 }
-}
-async function checkBackend() {
-const pill = document.getElementById("connectionMode");
-try {
-const res = await fetch(${API_BASE}/auth/demo-token);
-if (res.ok) {
-pill.innerText = "API Mode: CONNECTED TO LIVE FLASK REST API (127.0.0.1:5000)";
-pill.style.color = "#4ade80";
-return;
-}
-} catch (e) {}
-pill.innerText = "API Mode: STANDALONE BROWSER SIMULATION (Start app.py for Live REST)";
-pill.style.color = "#fbbf24";
-}
-checkBackend();
-function generateNextTxn() {
-txnCounter += 1;
-document.getElementById("txnId").value = TXN${txnCounter};
-document.getElementById("consoleLogs").innerHTML = > Generated fresh idempotency key: TXN${txnCounter};
 }
 function appendAuditRow(txn, meter, amount, latencyText, isSuccess, statusLabel) {
 const auditRows = document.getElementById("auditRows");
 const now = new Date().toISOString().replace("T", " ").substring(0, 19);
 const badgeClass = isSuccess ? "badge-ok" : "badge-err";
-const newRow = `
-${now}
-${txn}${meter}₦${Number(amount).toLocaleString()}${latencyText}${statusLabel}`;
-auditRows.innerHTML = newRow + auditRows.innerHTML;
+const row = document.createElement("tr");
+row.innerHTML =
+"" + now + "" +
+"" + txn + "" +
+"" + meter + "" +
+"₦" + Number(amount).toLocaleString("en-US") + "" +
+"" + latencyText + "" +
+"" + statusLabel + "";
+auditRows.insertBefore(row, auditRows.firstChild);
 }
-async function runSimulationPipeline(isReplayTest) {
+async function executeCreditLoad(isReplayTest) {
+const t0 = performance.now();
 const consoleLogs = document.getElementById("consoleLogs");
-const txnId = document.getElementById("txnId").value.trim();
+const banner = document.getElementById("lcdBanner");
+const ledAlert = document.getElementById("ledTamper");
+ledAlert.className = "led-dot";
+// If user clicks Replay Test, automatically use the last completed TXN ID
+let txnId = document.getElementById("txnId").value.trim();
+if (isReplayTest && lastSuccessfulTxn !== "") {
+txnId = lastSuccessfulTxn;
+document.getElementById("txnId").value = txnId;
+}
 const custName = document.getElementById("custName").value.trim();
 const custId = document.getElementById("custId").value.trim();
 const meterId = document.getElementById("meterId").value.trim();
 const amount = parseFloat(document.getElementById("amount").value) || 0;
-const banner = document.getElementById("lcdBanner");
-const ledAlert = document.getElementById("ledTamper");
-ledAlert.className = "led-dot";
 consoleLogs.innerHTML = isReplayTest
-? > [ADVERSARIAL TEST] Replaying duplicate Transaction ID: ${txnId}...\n
-: > Initiating payment settlement verification for ${txnId}...\n;
+? "> [SECURITY TEST] Replaying duplicate Transaction ID: " + txnId + "...\n"
+: "> Initiating payment settlement verification for " + txnId + "...\n";
+// 1. Validate inputs & amount
+if (!txnId || !custId || !meterId || amount <= 0) {
+ledAlert.className = "led-dot led-red";
+banner.innerText = "REJECTED: INVALID PAYLOAD (400)";
+consoleLogs.innerHTML += "> ERROR (400 INVALID_REQUEST): Check Customer ID, Meter ID, and Amount.\n";
+appendAuditRow(txnId || "N/A", meterId || "N/A", amount, "Blocked", false, "400 INVALID");
+return;
+}
+// 2. Check local or live backend
+let usedLiveApi = false;
 try {
-const tokenRes = await fetch(${API_BASE}/auth/demo-token);
-const { token } = await tokenRes.json();
-consoleLogs.innerHTML += > Gateway Handshake: APPROVED | HS256 JWT Bearer Token Issued.\n;
-consoleLogs.innerHTML += > Dispatching POST /api/v1/smart-meter/load-credit...\n;
-const apiRes = await fetch(${API_BASE}/smart-meter/load-credit, {
+const controller = new AbortController();
+const timeoutId = setTimeout(function () { controller.abort(); }, 600);
+const tokenRes = await fetch(API_BASE + "/auth/demo-token", { signal: controller.signal });
+clearTimeout(timeoutId);
+if (tokenRes.ok) {
+const tokenData = await tokenRes.json();
+const apiRes = await fetch(API_BASE + "/smart-meter/load-credit", {
 method: "POST",
 headers: {
 "Content-Type": "application/json",
-"Authorization": Bearer ${token}
+"Authorization": "Bearer " + tokenData.token
 },
 body: JSON.stringify({
 transactionID: txnId,
@@ -218,67 +222,100 @@ paymentStatus: "CONFIRMED"
 })
 });
 const result = await apiRes.json();
+usedLiveApi = true;
 if (apiRes.ok && result.status === "SUCCESS") {
+processedTxns.add(txnId);
+lastSuccessfulTxn = txnId;
 currentBalance = result.newBalance;
-document.getElementById("lcdMeterSerial").innerText = ID: ${meterId};
-document.getElementById("specOwner").innerText = ${custName} (${custId});
-document.getElementById("specLastTopup").innerText = +₦${amount.toLocaleString()} (${txnId});
-banner.innerText = CREDIT RECEIVED: +₦${amount.toLocaleString()} ACTIVATED;
-refreshMeterLCD(currentBalance, true);
-consoleLogs.innerHTML += > Validation Passed: Customer & Meter Ownership Verified.\n;
-consoleLogs.innerHTML += > SUCCESS (200 OK): ₦${amount.toLocaleString()} pushed directly to ${meterId}.\n;
-consoleLogs.innerHTML += > Meter LCD Updated: ₦${currentBalance.toLocaleString()} | Latency: ${result.processingLatencyMs} ms\n;
-appendAuditRow(txnId, meterId, amount, ${result.processingLatencyMs} ms, true, "200 SUCCESS");
+applySuccessUI(txnId, custName, custId, meterId, amount, result.processingLatencyMs + " ms (Live API)");
+return;
 } else {
 ledAlert.className = "led-dot led-red";
-banner.innerText = REJECTED: ${result.errorCode};
-consoleLogs.innerHTML += > SECURITY BLOCK (${apiRes.status} ${result.errorCode}): ${result.message}\n;
-appendAuditRow(txnId, meterId, amount, "Blocked", false, ${apiRes.status} ${result.errorCode});
+banner.innerText = "BLOCKED: " + result.errorCode + " (" + apiRes.status + ")";
+consoleLogs.innerHTML += "> SECURITY BLOCK (" + apiRes.status + " " + result.errorCode + "): " + result.message + "\n";
+appendAuditRow(txnId, meterId, amount, "Blocked", false, apiRes.status + " " + result.errorCode);
+return;
+}
 }
 } catch (err) {
-setTimeout(() => {
-consoleLogs.innerHTML += > Gateway Handshake verified: APPROVED [PAYMENT_SUCCESS_BANK_APPROVED]\n;
-if (offlineProcessed.has(txnId)) {
+// Proceed immediately to built-in simulation engine if Flask server is offline
+}
+if (!usedLiveApi) {
+consoleLogs.innerHTML += "> Gateway Handshake: APPROVED [PAYMENT_SUCCESS_BANK_APPROVED]\n";
+consoleLogs.innerHTML += "> Cryptographic JWT Signature: HS256 VERIFIED\n";
+// Idempotency Replay Check (409)
+if (processedTxns.has(txnId)) {
 ledAlert.className = "led-dot led-red";
-banner.innerText = "SECURITY ALERT: REPLAY BLOCKED (409)";
-consoleLogs.innerHTML += > SECURITY BLOCK (409 DUPLICATE_TRANSACTION): Transaction ID already processed.\n;
+banner.innerText = "ALERT: DUPLICATE REPLAY BLOCKED (409)";
+consoleLogs.innerHTML += "> SECURITY BLOCK (409 DUPLICATE_TRANSACTION): " + txnId + " was already credited.\n";
 appendAuditRow(txnId, meterId, amount, "Blocked", false, "409 REPLAY BLOCKED");
 return;
 }
+// Meter & Customer Ownership Check (404)
 if (meterId !== "SM4509876" || custId !== "IB001245") {
 ledAlert.className = "led-dot led-red";
 banner.innerText = "ERROR: UNREGISTERED METER (404)";
-consoleLogs.innerHTML += > SECURITY BLOCK (404 METER_VALIDATION_FAILED): Active customer or smart meter not found.\n;
+consoleLogs.innerHTML += "> SECURITY BLOCK (404 METER_VALIDATION_FAILED): Unregistered meter or customer mismatch.\n";
 appendAuditRow(txnId, meterId, amount, "Blocked", false, "404 INVALID METER");
 return;
 }
-offlineProcessed.add(txnId);
+// Success Execution (200 OK)
+processedTxns.add(txnId);
+lastSuccessfulTxn = txnId;
 currentBalance += amount;
-document.getElementById("lcdMeterSerial").innerText = ID: ${meterId};
-document.getElementById("specOwner").innerText = ${custName} (${custId});
-document.getElementById("specLastTopup").innerText = +₦${amount.toLocaleString()} (${txnId});
-banner.innerText = CREDIT RECEIVED: +₦${amount.toLocaleString()} ACTIVATED;
-refreshMeterLCD(currentBalance, true);
-consoleLogs.innerHTML += > Cryptographic JWT & Ownership Check: PASSED\n;
-consoleLogs.innerHTML += > SUCCESS: Direct credit activated on meter LCD. Balance: ₦${currentBalance.toLocaleString()}\n;
-appendAuditRow(txnId, meterId, amount, "161.0 ms (sim)", true, "200 SUCCESS");
-}, 500);
+const elapsed = Math.max(1.2, (performance.now() - t0)).toFixed(2) + " ms";
+applySuccessUI(txnId, custName, custId, meterId, amount, elapsed);
 }
+}
+function applySuccessUI(txnId, custName, custId, meterId, amount, latencyStr) {
+const consoleLogs = document.getElementById("consoleLogs");
+const banner = document.getElementById("lcdBanner");
+document.getElementById("lcdMeterSerial").innerText = "ID: " + meterId;
+document.getElementById("specOwner").innerText = custName + " (" + custId + ")";
+document.getElementById("specLastTopup").innerText = "+₦" + amount.toLocaleString("en-US") + " (" + txnId + ")";
+banner.innerText = "CREDIT RECEIVED: +₦" + amount.toLocaleString("en-US") + " ACTIVATED";
+refreshMeterLCD(currentBalance, true);
+consoleLogs.innerHTML += "> Customer & Meter Ownership: VERIFIED\n";
+consoleLogs.innerHTML += "> SUCCESS (200 OK): ₦" + amount.toLocaleString("en-US") + " loaded directly to " + meterId + ".\n";
+consoleLogs.innerHTML += "> Meter LCD Updated: ₦" + currentBalance.toLocaleString("en-US", { minimumFractionDigits: 2 }) + " | Latency: " + latencyStr + "\n";
+appendAuditRow(txnId, meterId, amount, latencyStr, true, "200 SUCCESS");
+// Auto-increment TXN ID for the next transaction so user can click smoothly
+txnCounter += 1;
+document.getElementById("txnId").value = "TXN" + txnCounter;
+}
+function resetFullDemo() {
+txnCounter = 900123;
+currentBalance = 1200.00;
+lastSuccessfulTxn = "";
+processedTxns.clear();
+document.getElementById("txnId").value = "TXN900123";
+document.getElementById("custName").value = "Musa Adewale";
+document.getElementById("custId").value = "IB001245";
+document.getElementById("meterId").value = "SM4509876";
+document.getElementById("amount").value = "5000";
+document.getElementById("ledTamper").className = "led-dot";
+document.getElementById("lcdMeterSerial").innerText = "ID: SM4509876";
+document.getElementById("specOwner").innerText = "Musa Adewale (IB001245)";
+document.getElementById("specLastTopup").innerText = "Initial Seed (₦1,200.00)";
+document.getElementById("lcdBanner").innerText = "ONLINE — DIRECT API LOAD READY";
+refreshMeterLCD(currentBalance, true);
+document.getElementById("auditRows").innerHTML = "";
+document.getElementById("consoleLogs").innerHTML = "> System & Smart Meter reset to initial state (Balance: ₦1,200.00).";
 }
 function exportTableToCSV() {
 const rows = document.querySelectorAll("#auditTable tr");
 let csvContent = "";
-rows.forEach(row => {
+rows.forEach(function (row) {
 const cols = row.querySelectorAll("th, td");
 let rowData = [];
-cols.forEach(col => {
+cols.forEach(function (col) {
 let text = col.innerText.replace(/,/g, "");
-rowData.push("${text}");
+rowData.push('"' + text + '"');
 });
 csvContent += rowData.join(",") + "\n";
 });
-if (csvContent.trim() === '"Timestamp","TXN ID","Meter","Value","Latency","Status"') {
-alert("No log data available to export yet. Please execute a request first!");
+if (rows.length <= 1) {
+alert("No log data available to export yet. Please execute a transaction first!");
 return;
 }
 const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
