@@ -2,327 +2,391 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SDSMCLF v1.0 Presentation Dashboard & Smart Meter Emulator</title>
+    <title>SDSMCLF v1.0 — IBEDC Real-Time Smart Meter & Audit Simulation</title>
     <style>
-        body { font-family: system-ui, -apple-system, sans-serif; background: #f1f5f9; padding: 18px; color: #1e293b; margin: 0; }
-        .container { max-width: 1320px; margin: 0 auto; }
-        header { background: linear-gradient(135deg, #1e3a8a, #0f172a); color: white; padding: 18px; border-radius: 10px; text-align: center; margin-bottom: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        header h2 { margin: 0 0 4px 0; font-size: 22px; }
-        header p { margin: 0; font-size: 13.5px; color: #cbd5e1; }
-        .mode-pill { display: inline-block; background: #0f172a; color: #4ade80; padding: 4px 14px; border-radius: 20px; font-size: 11.5px; font-weight: bold; margin-top: 8px; border: 1px solid #334155; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr 1.35fr; gap: 18px; align-items: start; }
-        .card { background: white; padding: 18px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
-        h3 { color: #1e3a8a; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; font-size: 16px; }
-        label { display: block; font-weight: bold; margin: 8px 0 4px; color: #475569; font-size: 12.5px; }
-        input { width: 93%; padding: 8px; border: 1px solid #cbd5e1; border-radius: 5px; font-size: 13.5px; background: #f8fafc; }
-        button { color: white; border: none; padding: 10px; width: 99%; border-radius: 5px; font-size: 13.5px; font-weight: bold; cursor: pointer; margin-top: 9px; transition: 0.2s; }
-        .btn-submit { background: #10b981; }
-        .btn-submit:hover { background: #059669; }
-        .btn-replay { background: #dc2626; }
-        .btn-replay:hover { background: #b91c1c; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 18px; }
+        .wrapper { max-width: 1380px; margin: 0 auto; }
+        .topbar { background: linear-gradient(90deg, #1e3a8a, #0f172a); border: 1px solid #334155; border-radius: 12px; padding: 16px 22px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+        .topbar h1 { margin: 0; font-size: 20px; color: #ffffff; }
+        .topbar p { margin: 3px 0 0; font-size: 12.5px; color: #94a3b8; }
+        .status-badge { background: #052e16; color: #4ade80; border: 1px solid #16a34a; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+        .grid { display: grid; grid-template-columns: 1fr 1.05fr 1.45fr; gap: 18px; }
+        @media (max-width: 1100px) { .grid { grid-template-columns: 1fr; } }
+        .panel { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 18px; }
+        .panel h2 { margin: 0 0 14px; font-size: 15px; color: #38bdf8; border-bottom: 1px solid #334155; padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .field { margin-bottom: 10px; }
+        .field label { display: block; font-size: 11.5px; color: #94a3b8; margin-bottom: 4px; font-weight: 600; }
+        .field input { width: 100%; padding: 9px 11px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: #f8fafc; font-size: 13.5px; }
+        .field input:focus { outline: none; border-color: #38bdf8; }
+        .preview-strip { background: #0f172a; border: 1px solid #1d4ed8; border-radius: 6px; padding: 9px 12px; display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 700; color: #60a5fa; margin: 10px 0; }
+        .btn { width: 100%; padding: 10px; border: none; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 8px; transition: 0.15s; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-primary { background: #10b981; color: #022c22; }
+        .btn-primary:hover:not(:disabled) { background: #34d399; }
+        .btn-split { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .btn-danger { background: #ef4444; color: #fff; }
+        .btn-danger:hover:not(:disabled) { background: #f87171; }
+        .btn-warn { background: #8b5cf6; color: #fff; }
+        .btn-warn:hover:not(:disabled) { background: #a78bfa; }
         .btn-reset { background: #f59e0b; color: #0f172a; }
-        .btn-reset:hover { background: #d97706; color: white; }
-        .btn-export { background: #2563eb; margin-top: 0; margin-bottom: 10px; }
-        .btn-export:hover { background: #1d4ed8; }
-        .console { background: #0f172a; color: #10b981; padding: 12px; border-radius: 6px; font-family: monospace; white-space: pre-wrap; margin-top: 12px; font-size: 11.5px; line-height: 1.45; height: 170px; overflow-y: auto; }
+        .btn-reset:hover:not(:disabled) { background: #fbbf24; }
+        .btn-csv { background: #2563eb; color: #fff; width: auto; padding: 7px 14px; margin: 0; font-size: 12px; }
+        .btn-csv:hover { background: #3b82f6; }
+        .terminal { background: #020617; border: 1px solid #334155; color: #22c55e; font-family: 'Consolas', 'Courier New', monospace; font-size: 11.5px; padding: 11px; border-radius: 6px; height: 150px; overflow-y: auto; margin-top: 12px; white-space: pre-wrap; line-height: 1.45; }
 
-        /* Digital Smart Meter Hardware Casing & LCD Styling */
-        .meter-casing { background: linear-gradient(180deg, #334155, #1e293b); border-radius: 14px; padding: 18px; color: #f8fafc; border: 3px solid #475569; box-shadow: inset 0 2px 4px rgba(255,255,255,0.15), 0 8px 16px rgba(0,0,0,0.15); }
-        .meter-brand { display: flex; justify-content: space-between; align-items: center; font-size: 11px; letter-spacing: 1px; color: #94a3b8; margin-bottom: 10px; font-weight: bold; }
-        .led-group { display: flex; gap: 12px; margin-bottom: 12px; background: #0f172a; padding: 8px 12px; border-radius: 6px; font-size: 11px; }
-        .led-item { display: flex; align-items: center; gap: 6px; }
-        .led-dot { width: 10px; height: 10px; border-radius: 50%; background: #475569; }
-        .led-green { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
-        .led-red { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
-        .lcd-screen { background: #84cc16; color: #1a2e05; font-family: 'Courier New', Courier, monospace; padding: 14px; border-radius: 6px; border: 4px solid #0f172a; box-shadow: inset 0 2px 8px rgba(0,0,0,0.35); transition: background 0.25s; }
-        .lcd-flash { background: #d9f99d !important; }
-        .lcd-top { display: flex; justify-content: space-between; font-size: 11px; font-weight: bold; border-bottom: 1px dashed #365314; padding-bottom: 4px; margin-bottom: 8px; }
-        .lcd-main { font-size: 26px; font-weight: 900; text-align: right; letter-spacing: 1px; margin: 6px 0; }
-        .lcd-sub { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; margin-top: 6px; border-top: 1px dashed #365314; padding-top: 6px; }
-        .lcd-msg { background: #365314; color: #ecfccb; font-size: 11px; padding: 5px 8px; border-radius: 3px; margin-top: 8px; text-align: center; font-weight: bold; }
-        .meter-specs { margin-top: 12px; font-size: 11.5px; color: #cbd5e1; background: rgba(15,23,42,0.6); padding: 10px; border-radius: 6px; line-height: 1.6; }
+        /* Digital Smart Meter Unit */
+        .meter-body { background: linear-gradient(180deg, #334155, #0f172a); border: 3px solid #64748b; border-radius: 16px; padding: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        .meter-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; color: #cbd5e1; letter-spacing: 0.8px; margin-bottom: 10px; }
+        .leds { display: flex; justify-content: space-between; background: #020617; padding: 8px 10px; border-radius: 8px; margin-bottom: 12px; font-size: 10.5px; font-weight: 700; }
+        .led { display: flex; align-items: center; gap: 5px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: #334155; }
+        .dot-green { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+        .dot-cyan { background: #38bdf8; box-shadow: 0 0 10px #38bdf8; }
+        .dot-red { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+        .lcd { background: #84cc16; color: #1a2e05; font-family: 'Courier New', monospace; border: 4px solid #020617; border-radius: 8px; padding: 14px; box-shadow: inset 0 3px 10px rgba(0,0,0,0.35); transition: background 0.2s; }
+        .lcd-active { background: #d9f99d !important; }
+        .lcd-row1 { display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 800; border-bottom: 1px dashed #365314; padding-bottom: 4px; }
+        .lcd-label { font-size: 11px; font-weight: 800; margin-top: 8px; }
+        .lcd-kwh { font-size: 30px; font-weight: 900; text-align: right; margin: 2px 0; letter-spacing: 1px; }
+        .lcd-row2 { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 800; border-top: 1px dashed #365314; padding-top: 6px; margin-top: 4px; }
+        .lcd-banner { background: #365314; color: #ecfccb; text-align: center; font-size: 11px; font-weight: 800; padding: 5px; border-radius: 4px; margin-top: 8px; }
+        .bar-bg { height: 6px; background: #020617; border-radius: 4px; overflow: hidden; margin-top: 10px; }
+        .bar-fill { height: 100%; width: 0%; background: #22c55e; transition: width 0.2s; }
+        .meter-meta { background: #020617; border-radius: 8px; padding: 10px; margin-top: 10px; font-size: 11.5px; color: #cbd5e1; line-height: 1.6; }
+        .slider-box { background: #020617; border-radius: 8px; padding: 10px; margin-top: 10px; font-size: 11.5px; }
+        .slider-box input[type="range"] { width: 100%; margin-top: 6px; cursor: pointer; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 6px; }
-        th, td { padding: 8px; border-bottom: 1px solid #e2e8f0; text-align: left; font-size: 12px; }
-        th { background: #f8fafc; color: #475569; }
-        .badge-ok { background: #d1fae5; color: #065f46; padding: 3px 7px; border-radius: 10px; font-size: 10.5px; font-weight: bold; }
-        .badge-err { background: #fee2e2; color: #991b1b; padding: 3px 7px; border-radius: 10px; font-size: 10.5px; font-weight: bold; }
+        /* Audit Log Table */
+        .audit-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 8px; margin-bottom: 10px; }
+        .audit-head h2 { border: none; margin: 0; padding: 0; }
+        .table-wrap { max-height: 520px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+        th { background: #0f172a; color: #94a3b8; text-align: left; padding: 8px; position: sticky; top: 0; }
+        td { padding: 8px; border-bottom: 1px solid #334155; color: #e2e8f0; }
+        .pill-ok { background: #064e3b; color: #6ee7b7; padding: 2px 7px; border-radius: 10px; font-weight: 700; font-size: 10.5px; }
+        .pill-err { background: #7f1d1d; color: #fca5a5; padding: 2px 7px; border-radius: 10px; font-weight: 700; font-size: 10.5px; }
     </style>
 </head>
 <body>
-<div class="container">
-    <header>
-        <h2>SDSMCLF v1.0 Working Simulation Prototype</h2>
-        <p>Smart Decentralized Secure Metering Credit Loading Framework — IBEDC Live Seminar Interface</p>
-        <div class="mode-pill" id="connectionMode">SYSTEM ONLINE — DIRECT METER PUSH ENGINE READY</div>
-    </header>
+<div class="wrapper">
+    <div class="topbar">
+        <div>
+            <h1>SDSMCLF v1.0 — IBEDC Real-Time Smart Meter &amp; Audit Simulation</h1>
+            <p>Secure Direct Smart Meter Credit Loading Reference Architecture &amp; Governance Framework</p>
+        </div>
+        <div class="status-badge">LIVE TELEMETRY &amp; ZERO-TOUCH API ENGINE ACTIVE</div>
+    </div>
 
     <div class="grid">
-        <!-- Column 1: Payment & API Gateway Trigger -->
-        <div class="card">
-            <h3>1. Payment & API Gateway Trigger</h3>
-            <label>Transaction Reference ID</label><input type="text" id="txnId" value="TXN900123">
-            <label>Customer Name</label><input type="text" id="custName" value="Musa Adewale">
-            <label>Customer ID</label><input type="text" id="custId" value="IB001245">
-            <label>Smart Meter Serial</label><input type="text" id="meterId" value="SM4509876">
-            <label>Purchase Topup Amount (₦)</label><input type="number" id="amount" value="5000">
-            <button type="button" class="btn-submit" onclick="executeCreditLoad(false)">Send Secure Direct Credit Request</button>
-            <button type="button" class="btn-replay" onclick="executeCreditLoad(true)">Test Replay Attack (Duplicate TXN)</button>
-            <button type="button" class="btn-reset" onclick="resetFullDemo()">Reset Demo & Meter Balance</button>
-            <div class="console" id="consoleLogs">&gt; Ready for automated direct credit loading...</div>
+        <!-- Column 1: Payment & Security Trigger -->
+        <div class="panel">
+            <h2>1. Payment &amp; API Gateway Trigger</h2>
+            <div class="field">
+                <label>Transaction Reference ID</label>
+                <input type="text" id="inTxn" value="TXN900123" oninput="syncMeterDisplay()">
+            </div>
+            <div class="field">
+                <label>Customer Full Name</label>
+                <input type="text" id="inName" value="Musa Adewale" oninput="syncMeterDisplay()">
+            </div>
+            <div class="field">
+                <label>IBEDC Customer Account ID</label>
+                <input type="text" id="inCustId" value="IB001245" oninput="syncMeterDisplay()">
+            </div>
+            <div class="field">
+                <label>Smart Meter Serial Number</label>
+                <input type="text" id="inMeterId" value="SM4509876" oninput="syncMeterDisplay()">
+            </div>
+            <div class="field">
+                <label>Purchase Top-Up Amount (₦)</label>
+                <input type="number" id="inAmount" value="5000" min="100" step="100" oninput="syncMeterDisplay()">
+            </div>
+
+            <div class="preview-strip">
+                <span>Pending Direct Credit:</span>
+                <span id="previewText">+₦5,000.00 (+73.53 kWh)</span>
+            </div>
+
+            <button type="button" class="btn btn-primary" id="btnSend" onclick="runCreditTransfer('VALID')">Send Secure Direct Credit Request</button>
+            <div class="btn-split">
+                <button type="button" class="btn btn-danger" id="btnReplay" onclick="runCreditTransfer('REPLAY')">Test Replay (409)</button>
+                <button type="button" class="btn btn-warn" id="btnBadMeter" onclick="runCreditTransfer('BAD_METER')">Test Bad Meter (404)</button>
+            </div>
+            <button type="button" class="btn btn-reset" id="btnReset" onclick="resetSimulation()">Reset Demo &amp; Smart Meter</button>
+
+            <div class="terminal" id="logConsole">&gt; System initialized. Edit any field above to see live meter updates...</div>
         </div>
 
         <!-- Column 2: Live Digital Smart Meter Emulator -->
-        <div class="card">
-            <h3>2. Live Digital Smart Meter Emulator</h3>
-            <div class="meter-casing">
-                <div class="meter-brand">
+        <div class="panel">
+            <h2>2. Live Digital Smart Meter Emulator</h2>
+            <div class="meter-body">
+                <div class="meter-header">
                     <span>IBEDC-AMI SMART METER</span>
                     <span>IEC 62056 / DLMS</span>
                 </div>
-                <div class="led-group">
-                    <div class="led-item"><div class="led-dot led-green" id="ledPower"></div><span>RELAY: ON</span></div>
-                    <div class="led-item"><div class="led-dot led-green" id="ledComms"></div><span>API LINK</span></div>
-                    <div class="led-item"><div class="led-dot" id="ledTamper"></div><span>ALERT</span></div>
-                </div>
-                <div class="lcd-screen" id="lcdBox">
-                    <div class="lcd-top">
-                        <span id="lcdMeterSerial">ID: SM4509876</span>
-                        <span>TARIFF: ₦68.00/kWh</span>
-                    </div>
-                    <div style="font-size: 11px; font-weight: bold;">AVAILABLE ENERGY CREDIT:</div>
-                    <div class="lcd-main" id="lcdUnits">17.65 kWh</div>
-                    <div class="lcd-sub">
-                        <span id="lcdBalance">BAL: ₦1,200.00</span>
-                        <span id="lcdLoad">LOAD: 1.42 kW</span>
-                    </div>
-                    <div class="lcd-msg" id="lcdBanner">ONLINE — DIRECT API LOAD READY</div>
-                </div>
-                <div class="meter-specs">
-                    <strong>Subscriber:</strong> <span id="specOwner">Musa Adewale (IB001245)</span><br>
-                    <strong>Activation Mode:</strong> Zero-Touch Direct API Push<br>
-                    <strong>Last Top-Up:</strong> <span id="specLastTopup">Initial Seed (₦1,200.00)</span>
-                </div>
-            </div>
-        </div>
+                <div class="leds">
+                    <div class="led"><div class="dot dot-green" id="ledRelay"></div><span id="lblRelay">RELAY: ON</span></div>
+                    <div class="led"><div class="dot dot-green" id="ledApi"></div><span>API LINK</span></div>
+                    <div class="led"><div class="dot" id="ledPulse"></div><span>kWh PULSE</span></div>
 
-        <!-- Column 3: Immutable Audit Log Repository -->
-        <div class="card">
-            <h3>3. Immutable Audit Log Repository</h3>
-            <button type="button" class="btn-export" onclick="exportTableToCSV()">Download Audit Logs (CSV)</button>
-            <table id="auditTable">
-                <thead>
-                    <tr>
-                        <th>Timestamp</th>
-                        <th>TXN ID</th>
-                        <th>Meter</th>
-                        <th>Value</th>
-                        <th>Latency</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="auditRows">
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+ALERT
 
-<script>
-    const API_BASE = "http://127.0.0";
-    const TARIFF_PER_KWH = 68.00;
-    let txnCounter = 900123;
-    let currentBalance = 1200.00;
-    let lastSuccessfulTxn = "";
-    const processedTxns = new Set();
 
-    // Live household load & real-time consumption tick on meter LCD
-    setInterval(function () {
-        const kw = (1.15 + Math.random() * 0.55).toFixed(2);
-        document.getElementById("lcdLoad").innerText = "LOAD: " + kw + " kW";
-        if (currentBalance > 0.05) {
-            currentBalance = Math.max(0, currentBalance - 0.02);
-            refreshMeterLCD(currentBalance, false);
-        }
-    }, 2500);
 
-    function refreshMeterLCD(balanceNgn, highlightFlash) {
-        const kwh = (balanceNgn / TARIFF_PER_KWH).toFixed(2);
-        document.getElementById("lcdUnits").innerText = kwh + " kWh";
+ID: SM4509876
+TARIFF: ₦68.00/kWh
 
-document.getElementById("lcdBalance").innerText = "BAL: ₦" + balanceNgn.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-if (highlightFlash) {
-const lcd = document.getElementById("lcdBox");
-lcd.classList.add("lcd-flash");
-setTimeout(function () { lcd.classList.remove("lcd-flash"); }, 900);
+AVAILABLE ENERGY CREDIT:
+17.65 kWh
+
+BAL: ₦1,200.00
+LOAD: 1.50 kW
+
+ONLINE — DIRECT API LOAD READY
+
+
+
+Subscriber: Musa Adewale (IB001245)
+
+Activation Mode: Zero-Touch Direct API Push
+
+Last Credit Event: Initial Seed (₦1,200.00)
+
+
+
+Live Household Load:
+1.50 kW (Normal)
+
+
+
+
+3. Immutable Audit Log Repository
+Download CSV
+
+
+Timestamp	TXN ID	Meter	Amount	Latency	Status
+
+const TARIFF = 68.00;
+let txnSeq = 900123;
+let balanceNgn = 1200.00;
+let loadKw = 1.50;
+let lastValidTxn = "";
+let busy = false;
+const usedTxns = new Set();
+function formatMoney(val) {
+return "₦" + Number(val).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function updateLcd(bal, flash) {
+const kwh = (bal / TARIFF).toFixed(2);
+document.getElementById("lcdKwh").innerText = kwh + " kWh";
+document.getElementById("lcdBal").innerText = "BAL: " + formatMoney(bal);
+if (flash) {
+const screen = document.getElementById("lcdScreen");
+screen.classList.add("lcd-active");
+setTimeout(function () { screen.classList.remove("lcd-active"); }, 700);
 }
 }
-function appendAuditRow(txn, meter, amount, latencyText, isSuccess, statusLabel) {
-const auditRows = document.getElementById("auditRows");
-const now = new Date().toISOString().replace("T", " ").substring(0, 19);
-const badgeClass = isSuccess ? "badge-ok" : "badge-err";
-const row = document.createElement("tr");
-row.innerHTML =
-"" + now + "" +
+function syncMeterDisplay() {
+const name = document.getElementById("inName").value.trim() || "Unassigned";
+const cid = document.getElementById("inCustId").value.trim() || "N/A";
+const mid = document.getElementById("inMeterId").value.trim() || "N/A";
+const amt = Math.max(0, parseFloat(document.getElementById("inAmount").value) || 0);
+const kwh = (amt / TARIFF).toFixed(2);
+document.getElementById("lcdSerial").innerText = "ID: " + mid;
+document.getElementById("metaOwner").innerText = name + " (" + cid + ")";
+document.getElementById("previewText").innerText = "+" + formatMoney(amt) + " (+" + kwh + " kWh)";
+}
+function changeLoad(val) {
+loadKw = parseFloat(val);
+let desc = "Normal";
+if (loadKw >= 3.5) desc = "Heavy AC / Appliances";
+else if (loadKw <= 1.0) desc = "Light Load";
+document.getElementById("loadText").innerText = loadKw.toFixed(2) + " kW (" + desc + ")";
+document.getElementById("lcdKw").innerText = "LOAD: " + loadKw.toFixed(2) + " kW";
+}
+// Real-time consumption tick every 1 second
+setInterval(function () {
+if (busy) return;
+const pulse = document.getElementById("ledPulse");
+pulse.classList.add("dot-cyan");
+setTimeout(function () { pulse.classList.remove("dot-cyan"); }, 220);
+const liveKw = Math.max(0.1, loadKw + (Math.random() * 0.06 - 0.03));
+document.getElementById("lcdKw").innerText = "LOAD: " + liveKw.toFixed(2) + " kW";
+if (balanceNgn > 0.01) {
+balanceNgn = Math.max(0, balanceNgn - (liveKw * 0.08));
+updateLcd(balanceNgn, false);
+document.getElementById("ledRelay").className = "dot dot-green";
+document.getElementById("lblRelay").innerText = "RELAY: ON";
+} else {
+document.getElementById("ledRelay").className = "dot dot-red";
+document.getElementById("lblRelay").innerText = "RELAY: OFF";
+document.getElementById("lcdStatus").innerText = "CREDIT DEPLETED — AWAITING TOP-UP";
+}
+}, 1000);
+function setBusy(state) {
+busy = state;
+document.getElementById("btnSend").disabled = state;
+document.getElementById("btnReplay").disabled = state;
+document.getElementById("btnBadMeter").disabled = state;
+}
+function logAudit(txn, meter, amount, latency, ok, statusText) {
+const tbody = document.getElementById("auditBody");
+const ts = new Date().toISOString().replace("T", " ").substring(0, 19);
+const cls = ok ? "pill-ok" : "pill-err";
+const tr = document.createElement("tr");
+tr.innerHTML =
+"" + ts + "" +
 "" + txn + "" +
 "" + meter + "" +
-"₦" + Number(amount).toLocaleString("en-US") + "" +
-"" + latencyText + "" +
-"" + statusLabel + "";
-auditRows.insertBefore(row, auditRows.firstChild);
+"" + formatMoney(amount) + "" +
+"" + latency + "" +
+"" + statusText + "";
+tbody.insertBefore(tr, tbody.firstChild);
 }
-async function executeCreditLoad(isReplayTest) {
-const t0 = performance.now();
-const consoleLogs = document.getElementById("consoleLogs");
-const banner = document.getElementById("lcdBanner");
-const ledAlert = document.getElementById("ledTamper");
-ledAlert.className = "led-dot";
-// If user clicks Replay Test, automatically use the last completed TXN ID
-let txnId = document.getElementById("txnId").value.trim();
-if (isReplayTest && lastSuccessfulTxn !== "") {
-txnId = lastSuccessfulTxn;
-document.getElementById("txnId").value = txnId;
+function rollBalanceAnimation(startVal, addVal, done) {
+const endVal = startVal + addVal;
+const frames = 16;
+let step = 0;
+const iv = setInterval(function () {
+step++;
+balanceNgn = startVal + (addVal * (step / frames));
+updateLcd(balanceNgn, step === frames);
+if (step >= frames) {
+clearInterval(iv);
+balanceNgn = endVal;
+updateLcd(balanceNgn, true);
+if (done) done();
 }
-const custName = document.getElementById("custName").value.trim();
-const custId = document.getElementById("custId").value.trim();
-const meterId = document.getElementById("meterId").value.trim();
-const amount = parseFloat(document.getElementById("amount").value) || 0;
-consoleLogs.innerHTML = isReplayTest
-? "> [SECURITY TEST] Replaying duplicate Transaction ID: " + txnId + "...\n"
-: "> Initiating payment settlement verification for " + txnId + "...\n";
-// 1. Validate inputs & amount
-if (!txnId || !custId || !meterId || amount <= 0) {
-ledAlert.className = "led-dot led-red";
-banner.innerText = "REJECTED: INVALID PAYLOAD (400)";
-consoleLogs.innerHTML += "> ERROR (400 INVALID_REQUEST): Check Customer ID, Meter ID, and Amount.\n";
-appendAuditRow(txnId || "N/A", meterId || "N/A", amount, "Blocked", false, "400 INVALID");
+}, 35);
+}
+function runCreditTransfer(mode) {
+if (busy) return;
+setBusy(true);
+const consoleBox = document.getElementById("logConsole");
+const statusBanner = document.getElementById("lcdStatus");
+const alertLed = document.getElementById("ledAlert");
+const apiLed = document.getElementById("ledApi");
+const bar = document.getElementById("progBar");
+alertLed.className = "dot";
+apiLed.className = "dot dot-cyan";
+bar.style.width = "20%";
+let txn = document.getElementById("inTxn").value.trim();
+const cid = document.getElementById("inCustId").value.trim();
+let mid = document.getElementById("inMeterId").value.trim();
+const amt = parseFloat(document.getElementById("inAmount").value) || 0;
+if (mode === "REPLAY") {
+txn = lastValidTxn || txn;
+document.getElementById("inTxn").value = txn;
+} else if (mode === "BAD_METER") {
+mid = "SM0000000";
+}
+statusBanner.innerText = "STAGE 1/3: VERIFYING BANK SETTLEMENT...";
+consoleBox.innerText = "> [STAGE 1] Confirming payment settlement for " + txn + " (" + formatMoney(amt) + ")...\n";
+setTimeout(function () {
+if (!txn || !cid || !mid || amt <= 0) {
+bar.style.width = "0%";
+apiLed.className = "dot dot-green";
+alertLed.className = "dot dot-red";
+statusBanner.innerText = "REJECTED: INVALID PAYLOAD (400)";
+consoleBox.innerText += "> ERROR (400 BAD_REQUEST): Invalid transaction parameters.\n";
+logAudit(txn || "N/A", mid || "N/A", amt, "Blocked", false, "400 INVALID");
+setBusy(false);
 return;
 }
-// 2. Check local or live backend
-let usedLiveApi = false;
-try {
-const controller = new AbortController();
-const timeoutId = setTimeout(function () { controller.abort(); }, 600);
-const tokenRes = await fetch(API_BASE + "/auth/demo-token", { signal: controller.signal });
-clearTimeout(timeoutId);
-if (tokenRes.ok) {
-const tokenData = await tokenRes.json();
-const apiRes = await fetch(API_BASE + "/smart-meter/load-credit", {
-method: "POST",
-headers: {
-"Content-Type": "application/json",
-"Authorization": "Bearer " + tokenData.token
-},
-body: JSON.stringify({
-transactionID: txnId,
-customerID: custId,
-meterID: meterId,
-amount: amount,
-paymentStatus: "CONFIRMED"
-})
+bar.style.width = "55%";
+statusBanner.innerText = "STAGE 2/3: API JWT & REPLAY CHECK...";
+consoleBox.innerText += "> [STAGE 2] Gateway Handshake APPROVED | Verifying HS256 JWT & Idempotency...\n";
+setTimeout(function () {
+if (usedTxns.has(txn)) {
+bar.style.width = "0%";
+apiLed.className = "dot dot-green";
+alertLed.className = "dot dot-red";
+statusBanner.innerText = "SECURITY ALERT: REPLAY BLOCKED (409)";
+consoleBox.innerText += "> SECURITY BLOCK (409 DUPLICATE_TRANSACTION): " + txn + " already processed!\n";
+logAudit(txn, mid, amt, "Blocked", false, "409 REPLAY BLOCKED");
+setBusy(false);
+return;
+}
+if (mode === "BAD_METER" || mid === "SM0000000") {
+bar.style.width = "0%";
+apiLed.className = "dot dot-green";
+alertLed.className = "dot dot-red";
+statusBanner.innerText = "ERROR: UNREGISTERED METER (404)";
+consoleBox.innerText += "> SECURITY BLOCK (404 METER_NOT_FOUND): Meter " + mid + " is not registered.\n";
+logAudit(txn, mid, amt, "Blocked", false, "404 INVALID METER");
+setBusy(false);
+return;
+}
+bar.style.width = "85%";
+statusBanner.innerText = "STAGE 3/3: PUSHING CREDIT TO METER...";
+consoleBox.innerText += "> [STAGE 3] Dispatching encrypted DLMS/COSEM packet to " + mid + "...\n";
+const latency = (149 + Math.random() * 22).toFixed(1) + " ms";
+rollBalanceAnimation(balanceNgn, amt, function () {
+bar.style.width = "100%";
+apiLed.className = "dot dot-green";
+usedTxns.add(txn);
+lastValidTxn = txn;
+document.getElementById("metaLastEvent").innerText = "+" + formatMoney(amt) + " (" + txn + ")";
+statusBanner.innerText = "ACTIVATED: +" + formatMoney(amt) + " CREDITED";
+consoleBox.innerText += "> SUCCESS (200 OK): " + formatMoney(amt) + " activated on " + mid + " in " + latency + ".\n";
+logAudit(txn, mid, amt, latency, true, "200 SUCCESS");
+txnSeq++;
+document.getElementById("inTxn").value = "TXN" + txnSeq;
+syncMeterDisplay();
+setTimeout(function () { bar.style.width = "0%"; }, 700);
+setBusy(false);
 });
-const result = await apiRes.json();
-usedLiveApi = true;
-if (apiRes.ok && result.status === "SUCCESS") {
-processedTxns.add(txnId);
-lastSuccessfulTxn = txnId;
-currentBalance = result.newBalance;
-applySuccessUI(txnId, custName, custId, meterId, amount, result.processingLatencyMs + " ms (Live API)");
-return;
-} else {
-ledAlert.className = "led-dot led-red";
-banner.innerText = "BLOCKED: " + result.errorCode + " (" + apiRes.status + ")";
-consoleLogs.innerHTML += "> SECURITY BLOCK (" + apiRes.status + " " + result.errorCode + "): " + result.message + "\n";
-appendAuditRow(txnId, meterId, amount, "Blocked", false, apiRes.status + " " + result.errorCode);
-return;
+}, 400);
+}, 400);
 }
+function resetSimulation() {
+if (busy) return;
+txnSeq = 900123;
+balanceNgn = 1200.00;
+loadKw = 1.50;
+lastValidTxn = "";
+usedTxns.clear();
+document.getElementById("inTxn").value = "TXN900123";
+document.getElementById("inName").value = "Musa Adewale";
+document.getElementById("inCustId").value = "IB001245";
+document.getElementById("inMeterId").value = "SM4509876";
+document.getElementById("inAmount").value = "5000";
+document.getElementById("loadRange").value = "1.5";
+changeLoad(1.5);
+syncMeterDisplay();
+document.getElementById("ledAlert").className = "dot";
+document.getElementById("ledRelay").className = "dot dot-green";
+document.getElementById("lblRelay").innerText = "RELAY: ON";
+document.getElementById("progBar").style.width = "0%";
+document.getElementById("metaLastEvent").innerText = "Initial Seed (₦1,200.00)";
+document.getElementById("lcdStatus").innerText = "ONLINE — DIRECT API LOAD READY";
+updateLcd(balanceNgn, true);
+document.getElementById("auditBody").innerHTML = "";
+document.getElementById("logConsole").innerText = "> System & Smart Meter reset to initial seed (₦1,200.00).";
 }
-} catch (err) {
-// Proceed immediately to built-in simulation engine if Flask server is offline
-}
-if (!usedLiveApi) {
-consoleLogs.innerHTML += "> Gateway Handshake: APPROVED [PAYMENT_SUCCESS_BANK_APPROVED]\n";
-consoleLogs.innerHTML += "> Cryptographic JWT Signature: HS256 VERIFIED\n";
-// Idempotency Replay Check (409)
-if (processedTxns.has(txnId)) {
-ledAlert.className = "led-dot led-red";
-banner.innerText = "ALERT: DUPLICATE REPLAY BLOCKED (409)";
-consoleLogs.innerHTML += "> SECURITY BLOCK (409 DUPLICATE_TRANSACTION): " + txnId + " was already credited.\n";
-appendAuditRow(txnId, meterId, amount, "Blocked", false, "409 REPLAY BLOCKED");
-return;
-}
-// Meter & Customer Ownership Check (404)
-if (meterId !== "SM4509876" || custId !== "IB001245") {
-ledAlert.className = "led-dot led-red";
-banner.innerText = "ERROR: UNREGISTERED METER (404)";
-consoleLogs.innerHTML += "> SECURITY BLOCK (404 METER_VALIDATION_FAILED): Unregistered meter or customer mismatch.\n";
-appendAuditRow(txnId, meterId, amount, "Blocked", false, "404 INVALID METER");
-return;
-}
-// Success Execution (200 OK)
-processedTxns.add(txnId);
-lastSuccessfulTxn = txnId;
-currentBalance += amount;
-const elapsed = Math.max(1.2, (performance.now() - t0)).toFixed(2) + " ms";
-applySuccessUI(txnId, custName, custId, meterId, amount, elapsed);
-}
-}
-function applySuccessUI(txnId, custName, custId, meterId, amount, latencyStr) {
-const consoleLogs = document.getElementById("consoleLogs");
-const banner = document.getElementById("lcdBanner");
-document.getElementById("lcdMeterSerial").innerText = "ID: " + meterId;
-document.getElementById("specOwner").innerText = custName + " (" + custId + ")";
-document.getElementById("specLastTopup").innerText = "+₦" + amount.toLocaleString("en-US") + " (" + txnId + ")";
-banner.innerText = "CREDIT RECEIVED: +₦" + amount.toLocaleString("en-US") + " ACTIVATED";
-refreshMeterLCD(currentBalance, true);
-consoleLogs.innerHTML += "> Customer & Meter Ownership: VERIFIED\n";
-consoleLogs.innerHTML += "> SUCCESS (200 OK): ₦" + amount.toLocaleString("en-US") + " loaded directly to " + meterId + ".\n";
-consoleLogs.innerHTML += "> Meter LCD Updated: ₦" + currentBalance.toLocaleString("en-US", { minimumFractionDigits: 2 }) + " | Latency: " + latencyStr + "\n";
-appendAuditRow(txnId, meterId, amount, latencyStr, true, "200 SUCCESS");
-// Auto-increment TXN ID for the next transaction so user can click smoothly
-txnCounter += 1;
-document.getElementById("txnId").value = "TXN" + txnCounter;
-}
-function resetFullDemo() {
-txnCounter = 900123;
-currentBalance = 1200.00;
-lastSuccessfulTxn = "";
-processedTxns.clear();
-document.getElementById("txnId").value = "TXN900123";
-document.getElementById("custName").value = "Musa Adewale";
-document.getElementById("custId").value = "IB001245";
-document.getElementById("meterId").value = "SM4509876";
-document.getElementById("amount").value = "5000";
-document.getElementById("ledTamper").className = "led-dot";
-document.getElementById("lcdMeterSerial").innerText = "ID: SM4509876";
-document.getElementById("specOwner").innerText = "Musa Adewale (IB001245)";
-document.getElementById("specLastTopup").innerText = "Initial Seed (₦1,200.00)";
-document.getElementById("lcdBanner").innerText = "ONLINE — DIRECT API LOAD READY";
-refreshMeterLCD(currentBalance, true);
-document.getElementById("auditRows").innerHTML = "";
-document.getElementById("consoleLogs").innerHTML = "> System & Smart Meter reset to initial state (Balance: ₦1,200.00).";
-}
-function exportTableToCSV() {
+function downloadCsv() {
 const rows = document.querySelectorAll("#auditTable tr");
-let csvContent = "";
-rows.forEach(function (row) {
-const cols = row.querySelectorAll("th, td");
-let rowData = [];
-cols.forEach(function (col) {
-let text = col.innerText.replace(/,/g, "");
-rowData.push('"' + text + '"');
-});
-csvContent += rowData.join(",") + "\n";
-});
 if (rows.length <= 1) {
-alert("No log data available to export yet. Please execute a transaction first!");
+alert("No audit logs available to export yet. Execute a transaction first!");
 return;
 }
-const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-const link = document.createElement("a");
-link.href = URL.createObjectURL(blob);
-link.setAttribute("download", "sdsmclf_audit_logs.csv");
-document.body.appendChild(link);
-link.click();
-document.body.removeChild(link);
+let csv = "";
+rows.forEach(function (r) {
+const cols = r.querySelectorAll("th, td");
+const vals = [];
+cols.forEach(function (c) {
+vals.push('"' + c.innerText.replace(/,/g, "") + '"');
+});
+csv += vals.join(",") + "\n";
+});
+const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+const a = document.createElement("a");
+a.href = URL.createObjectURL(blob);
+a.download = "sdsmclf_immutable_audit_logs.csv";
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
 }
+syncMeterDisplay();
