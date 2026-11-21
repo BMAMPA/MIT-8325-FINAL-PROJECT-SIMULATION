@@ -1,0 +1,8 @@
+digraph G { graph [fontname="Helvetica", bgcolor="white", pad="0.25", nodesep="0.35", ranksep="0.45", dpi=200];
+node  [fontname="Helvetica", fontsize=11, shape=box, style="rounded,filled", color="#1e3a8a", fillcolor="#eef2ff", penwidth=1.2, margin="0.18,0.08"];
+edge  [fontname="Helvetica", fontsize=9, color="#475569", arrowsize=0.7]; rankdir=TB; nodesep="0.3";
+ c[label="Customer / payment platform"]; iv[label="Identity verification"]; gw[label="Secure API Gateway", fillcolor="#dbeafe"];
+ aa[label="API authentication"]; td[label="Threat detection\n(rate limits, anomalies)"]; tp[label="Transaction processing layer"];
+ ev[label="Encryption & validation controls"]; mc[label="Smart meter communication"]; m[label="Smart meter"];
+ al[label="Audit logging & monitoring", fillcolor="#fef3c7", color="#b45309"];
+ c->iv->gw; gw->aa; gw->td; aa->tp; td->tp; tp->ev->mc->m; {gw tp mc} -> al [style=dashed]; }

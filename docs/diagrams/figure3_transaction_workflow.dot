@@ -1,0 +1,17 @@
+digraph G { graph [fontname="Helvetica", bgcolor="white", pad="0.25", nodesep="0.35", ranksep="0.45", dpi=200];
+node  [fontname="Helvetica", fontsize=11, shape=box, style="rounded,filled", color="#1e3a8a", fillcolor="#eef2ff", penwidth=1.2, margin="0.18,0.08"];
+edge  [fontname="Helvetica", fontsize=9, color="#475569", arrowsize=0.7]; rankdir=TB; nodesep="0.3"; ranksep="0.3";
+ s[label="Customer pays (app / bank / USSD)"]; g[label="Payment gateway confirms settlement\n(transactionID issued)"];
+ d1[label="JWT valid?", shape=diamond, style=filled, fillcolor="#ffffff", margin="0.05"]; d2[label="Payment\nconfirmed?", shape=diamond, style=filled, fillcolor="#ffffff", margin="0.05"];
+ d3[label="transactionID\nnew?", shape=diamond, style=filled, fillcolor="#ffffff", margin="0.05"]; d4[label="Meter registered\n& owned?", shape=diamond, style=filled, fillcolor="#ffffff", margin="0.05"];
+ d5[label="Meter online?", shape=diamond, style=filled, fillcolor="#ffffff", margin="0.05"];
+ push[label="Encrypted credit command to meter\n(DLMS/COSEM) — credit applied", fillcolor="#dcfce7", color="#047857"];
+ sts[label="Fallback: issue standard\n20-digit STS token", fillcolor="#fef3c7", color="#b45309"];
+ log[label="Write immutable audit record\n(timestamp, IDs, outcome, latency)"];
+ r1[label="401 Unauthorized", fillcolor="#fee2e2", color="#b91c1c"]; r2[label="400 Bad Request", fillcolor="#fee2e2", color="#b91c1c"];
+ r3[label="409 Conflict", fillcolor="#fee2e2", color="#b91c1c"]; r4[label="404 / 403", fillcolor="#fee2e2", color="#b91c1c"];
+ s->g->d1; d1->d2[label=" yes"]; d2->d3[label=" yes"]; d3->d4[label=" yes"]; d4->d5[label=" yes"]; d5->push[label=" yes"]; d5->sts[label=" no (timeout)"];
+ d1->r1[label=" no"]; d2->r2[label=" no"]; d3->r3[label=" no"]; d4->r4[label=" no"];
+ {rank=same; d1; r1} {rank=same; d2; r2} {rank=same; d3; r3} {rank=same; d4; r4}
+ push->log; sts->log; r1->log[style=dotted]; r2->log[style=dotted]; r3->log[style=dotted]; r4->log[style=dotted];
+}
