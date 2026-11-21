@@ -1,0 +1,5 @@
+digraph G { graph [fontname="Helvetica", bgcolor="white", pad="0.25", nodesep="0.35", ranksep="0.45", dpi=200];
+node  [fontname="Helvetica", fontsize=11, shape=box, style="rounded,filled", color="#1e3a8a", fillcolor="#eef2ff", penwidth=1.2, margin="0.18,0.08"];
+edge  [fontname="Helvetica", fontsize=9, color="#475569", arrowsize=0.7]; rankdir=LR; nodesep=0.2;
+ a[label="Customer\npayment"]; b[label="API transaction\nverification"]; c[label="Meter\nvalidation"]; d[label="Automated\ncredit loading", fillcolor="#dcfce7", color="#047857"]; e[label="Customer\nconfirmation"]; f[label="System\nmonitoring", fillcolor="#fef3c7", color="#b45309"];
+ a->b->c->d->e->f; }

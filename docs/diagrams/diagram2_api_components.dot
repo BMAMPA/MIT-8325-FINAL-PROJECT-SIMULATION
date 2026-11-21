@@ -1,0 +1,7 @@
+digraph G { graph [fontname="Helvetica", bgcolor="white", pad="0.25", nodesep="0.35", ranksep="0.45", dpi=200];
+node  [fontname="Helvetica", fontsize=11, shape=box, style="rounded,filled", color="#1e3a8a", fillcolor="#eef2ff", penwidth=1.2, margin="0.18,0.08"];
+edge  [fontname="Helvetica", fontsize=9, color="#475569", arrowsize=0.7]; rankdir=TB;
+ ca[label="Customer application"]; pp[label="Payment platform / PSP"]; gw[label="Secure API Gateway", fillcolor="#dbeafe"];
+ au[label="Authentication service\n(JWT, 401)"]; tx[label="Transaction service\n(400 · 409 · 404 · 403)"];
+ bs[label="IBEDC billing system"]; sm[label="Smart Meter API service"]; nw[label="Smart meter network → meter"];
+ ca->pp->gw; gw->au; gw->tx; au->tx[style=dashed, label=" token claims"]; tx->bs->sm->nw; }

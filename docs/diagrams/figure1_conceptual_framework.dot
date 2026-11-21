@@ -1,0 +1,17 @@
+digraph G { graph [fontname="Helvetica", bgcolor="white", pad="0.25", nodesep="0.35", ranksep="0.45", dpi=200];
+node  [fontname="Helvetica", fontsize=11, shape=box, style="rounded,filled", color="#1e3a8a", fillcolor="#eef2ff", penwidth=1.2, margin="0.18,0.08"];
+edge  [fontname="Helvetica", fontsize=9, color="#475569", arrowsize=0.7]; rankdir=LR; ranksep="0.7";
+ subgraph cluster_a { label="Existing industry problems"; fontname="Helvetica-Bold"; fontsize=12; style="rounded,filled"; fillcolor="#fef2f2"; color="#b91c1c";
+   a1[label="Manual 20-digit\nSTS token entry", fillcolor="#ffffff", color="#b91c1c"]; a2[label="Fragmented payment-\nto-meter integration", fillcolor="#ffffff", color="#b91c1c"];
+   a3[label="Customer service\nand dispute load", fillcolor="#ffffff", color="#b91c1c"]; a4[label="Limited end-to-end\nvisibility", fillcolor="#ffffff", color="#b91c1c"]; }
+ subgraph cluster_b { label="Digital technology enablers"; fontname="Helvetica-Bold"; fontsize=12; style="rounded,filled"; fillcolor="#eff6ff"; color="#1d4ed8";
+   b1[label="Smart metering / AMI\n(IEC 62056 DLMS)", fillcolor="#ffffff"]; b2[label="REST API\nintegration", fillcolor="#ffffff"]; b3[label="Digital payment\nplatforms", fillcolor="#ffffff"];
+   b4[label="Identity management\n(JWT / OAuth 2.0)", fillcolor="#ffffff"]; b5[label="Cybersecurity controls\n(NIST, ISO 27001)", fillcolor="#ffffff"]; }
+ subgraph cluster_c { label="SDSMCLF v1.0 framework"; fontname="Helvetica-Bold"; fontsize=12; style="rounded,filled"; fillcolor="#ecfdf5"; color="#047857";
+   c1[label="Secure API gateway\n(integration layer)", fillcolor="#ffffff", color="#047857"]; c2[label="Transaction validation\nengine", fillcolor="#ffffff", color="#047857"];
+   c3[label="Meter authentication\nservice", fillcolor="#ffffff", color="#047857"]; c4[label="Governance and\naudit management", fillcolor="#ffffff", color="#047857"]; }
+ subgraph cluster_d { label="Expected outcomes"; fontname="Helvetica-Bold"; fontsize=12; style="rounded,filled"; fillcolor="#fffbeb"; color="#b45309";
+   d1[label="Automated credit\nloading", fillcolor="#ffffff", color="#b45309"]; d2[label="Fewer manual\nerrors", fillcolor="#ffffff", color="#b45309"]; d3[label="Stronger transaction\nsecurity", fillcolor="#ffffff", color="#b45309"];
+   d4[label="Operational\nvisibility", fillcolor="#ffffff", color="#b45309"]; d5[label="Better customer\nexperience", fillcolor="#ffffff", color="#b45309"]; }
+ a2 -> b3 [lhead=cluster_b, ltail=cluster_a, penwidth=2]; b3 -> c2 [lhead=cluster_c, ltail=cluster_b, penwidth=2]; c2 -> d3 [lhead=cluster_d, ltail=cluster_c, penwidth=2];
+ compound=true; }
